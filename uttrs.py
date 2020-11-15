@@ -71,7 +71,7 @@ class UnitConverterAndValidator:
                 f"Unit of attribute '{aname}' must be equivalent to '{unit}'. Found '{ufound}'.")
     
     
-def unit_attribute(unit: u.UnitBase, **kwargs):
+def attribute(unit: u.UnitBase, **kwargs):
     """Crea un nuevo atributo con conversores y validadores de unidad.
     
     Parameters
@@ -131,6 +131,8 @@ def unit_attribute(unit: u.UnitBase, **kwargs):
     converter.append(ucav.asunit)
     
     return attr.ib(validator=validator, converter=converter, **kwargs)
+    
+ib = attribute
     
     
 @attr.s(frozen=True, repr=False)
