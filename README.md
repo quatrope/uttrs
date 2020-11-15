@@ -6,7 +6,19 @@ a unidades de astropy.
 - `uttr.ib` Que genera atributos sensibles a unidades.
 - `uttr-array_accessor` que permite acceder a atributos con unidades y convertirlos en numpy array.
 
-El siguiente código es un ejemplo prototipo de una clase que representa una Galaxia
+El siguiente código es un ejemplo prototipo de una clase que representa una Galaxia. 
+La galaxia tiene 
+
+- tres arreglos (`x`, `y`, `z`) de las posiciones de sus particulas las cuales se miden en kiloparsecs (`u.kpc`).
+- tres arreglos (`vx`, `vy`, `vz`) de las velocidades de sus particulas las cuales se miden en $Km/s$ (`u.kms/s`).
+- Un arreglos (`m`) de las mases de sus particulas las cuales se miden en masas solares (`u.M_sun`).
+- Un texto libre para notas `notes`
+
+En todos los casos se desea poder acceder a las velocidade, posiciones y masas; con y sin unidades (como `np.ndarray`)
+Las unidades sugeridas en la información de las particulas son sugerencias asi:
+
+- Si el usuario ingresa la informacón sin unidades, la galaxia asume que estan en la unida sugerida.
+- Si ingresa en alguna otra unidad valida que se equivalente a la unidad sugerida.
 
 
 ```python
