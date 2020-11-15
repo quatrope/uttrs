@@ -43,3 +43,12 @@ class Galaxy:
     
     arr_ = uttr.array_accessor()
 ```
+
+## Creemos una galaxia
+
+```pycon
+>>> import numpy as np
+>>> import astropy.units as u
+
+>>> gal = Galaxy(
+```
