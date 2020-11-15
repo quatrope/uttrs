@@ -1,5 +1,12 @@
 # uttrs
-astropy.units plus attrs
+
+`uttrs` brinda dos utilidades principales para la creación de clases con `attrs` sensibles 
+a unidades de astropy. 
+
+- `uttr.ib` Que genera atributos sensibles a unidades.
+- `uttr-array_accessor` que permite acceder a atributos con unidades y convertirlos en numpy array.
+
+El siguiente código es un ejemplo prototipo de una clase que representa una Galaxia
 
 
 ```python
