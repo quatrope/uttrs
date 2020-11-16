@@ -84,7 +84,7 @@ class UnitConverterAndValidator:
             return value * self.unit
         return value
 
-    def is_equivalent(self, instance, attribute, value):
+    def validate_is_equivalent_unit(self, instance, attribute, value):
         """Valida que el valor de un atributo sea equivalente a la unit.
 
         El método sigue la firma sugerida por los validadores de attrs.
@@ -167,7 +167,7 @@ def attribute(unit: u.UnitBase, **kwargs):
     validator = kwargs.pop("validator", [])
     if callable(validator):
         validator = [validator]
-    validator.append(ucav.is_equivalent)
+    validator.append(ucav.validate_is_equivalent_unit)
 
     # si habia converters lo saco
     # (puede ser solo una funcion asi que lo meto a una lista)
@@ -255,7 +255,7 @@ class ArrayAccessor:
 
     def __dir__(self):
         """dir(x) <==> x.__dir__()"""
-        return self.__dir__() + dir(self._instance)
+        return super().__dir__() + dir(self._instance)
 
     def __getattr__(self, a):
         """getattr(x, y) <==> x.__getattr__(y) <==> getattr(x, y)"""
@@ -266,7 +266,7 @@ class ArrayAccessor:
         return v
 
 
-def array_accessor(**kwargs):
+def array_accessor():
     """Provee un atributo ArrayAccessor a una clase attrs.
 
     Este nuevo atribuo, permite acceder a cualquier atributo
@@ -307,11 +307,8 @@ def array_accessor(**kwargs):
     array([1, 2, 3])
 
     """
-    if "default" in kwargs:
-        raise AttributeError("default")
-    if "factory" in kwargs:
-        raise AttributeError("factory")
-    kwargs.setdefault("repr", False)
     return attr.ib(
-        default=attr.Factory(ArrayAccessor, takes_self=True), **kwargs
+        default=attr.Factory(ArrayAccessor, takes_self=True),
+        repr=False,
+        init=False,
     )
