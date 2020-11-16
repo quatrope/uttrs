@@ -10,10 +10,10 @@
 The following piece of code is an exampl prototype of a Class representing a Galaxy.
 The Galaxy contains:
 
-- three arrays (`x`, `y`, `z`) with particle positions, measured in kiloparsecs (`u.kpc`).
-- three arrays (`vx`, `vy`, `vz`) for the particle velocities, measured in $Km/s$ (`u.kms/u.s`).
-- an array (`m`) of particle masses, expressed in solar masses (`u.M_sun`).
-- a free text for note taking in `notes`
+- three arrays (`x`, `y`, `z`) with particle positions, measured in *kiloparsecs* (`u.kpc`).
+- three arrays (`vx`, `vy`, `vz`) for the particle velocities, measured in *Km/s* (`u.kms/u.s`).
+- an array (`m`) of particle masses, expressed in *solar masses* (`u.M_sun`).
+- a free text for note taking in `notes`.
 
 In every case we would like to access to position, velocity and mass of the particles, with and without units (as `np.ndarray`).
 Suggested units in the information of the attributes behave like this:
