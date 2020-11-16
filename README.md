@@ -2,6 +2,8 @@
 
 `uttrs` brinda dos utilidades principales para la creación de clases con `attrs` sensibles a unidades de astropy.
 
+![img](res/ugly_logo.png)
+
 - `uttr.ib` Que genera atributos sensibles a unidades.
 - `uttr-array_accessor` que permite acceder a atributos con unidades y convertirlos en numpy array.
 
