@@ -82,12 +82,51 @@ Galaxy(
 
 # we can access al the attributes in the traditional python way
 >>> gal.x
-<Quantity [5632.35740606, 1363.36235923, 3037.46794044, 2785.45299727,
-           2515.35793673] kpc>
+<Quantity [5632.35740606, 1363.36235923, 3037.46794044, 2785.45299727, 2515.35793673] kpc>
 
 >>> gal.vz  # z is now a km/s
-<Quantity [6218.56279077, 2015.04638043, 9919.99579782, 1278.94359767,
-           7228.21626876] km / s>
+<Quantity [6218.56279077, 2015.04638043, 9919.99579782, 1278.94359767, 7228.21626876] km / s>
+
+# We stored y as mpc
+>>> gal.y
+<Quantity [8093.44916403, 2198.55398718, 5464.79397835, 1860.72260272, 3636.64010118] mpc>
+
+```
 
 
+## Simple interacción con `numpy.ndarray`
+
+we can access all the same attributes declared with `uttr.ib but` coerced to the default unit as numpy array.
+
+```pycon
+>>> gal.arr_.y
+array([0.00809345, 0.00219855, 0.00546479, 0.00186072, 0.00363664])
+```
+
+The above code is equivalent to
+
+```pycon
+>>> np.asarray(gal.y.to(u.kpc))
+array([0.00809345, 0.00219855, 0.00546479, 0.00186072, 0.00363664])
+```
+
+## Equivalent units errors
+
+If we change the unit to something not equivalent to the default unit
+declares in `uttr.ib` an exception is raised.
+
+Lets fot exaple define `x` as a kilogram (`u.kg`)
+
+```pycon
+>>> gal = Galaxy(
+...     x = x * u.kg,  # kg is not equivalent to kpc
+...     y = y,
+...     z = z,
+...     vx = vx,
+...     vy = vy,
+...     vz = vz,
+...     m = m,
+...     notes="a random galaxy made with random numbers")
+
+ValueError: Unit of attribute 'x' must be equivalent to 'kpc'.Found 'kg'.
 ```
