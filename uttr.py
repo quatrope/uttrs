@@ -267,19 +267,18 @@ class ArrayAccessor:
 
 
 def array_accessor():
-    """Provee un atributo ArrayAccessor a una clase attrs.
+    """Provides an ArrayAccessor attribute to an attrs class.
 
-    Este nuevo atribuo, permite acceder a cualquier atributo
-    o propiedad de la clase. En caso de que el valor del
-    atributo sea un tipo units.Quantity, lo convierte a
-    a la unidad por defecto del atributo y posteriormente
-    a numpy.ndarray .
+    This new attribute allows access to any other attribute or property of
+    the class. In the case that the value given to the attribute is a
+    `units.Quantity` type, it converts it to the default unit of the attribute
+    and aftwerwars to a `numpy.ndarray`.
 
     Parameters
     ----------
     kwargs :
-        Acepta todos los mismos parametros que `attr.ib` a
-        ecepcion de default y factory.
+        Accepts every parameter that `attr.ib` can accept, except for
+        default and factory.
 
     Example
     -------
