@@ -113,7 +113,7 @@ class UnitConverterAndValidator:
             unit, aname, ufound = self.unit, attribute.name, value.unit
             raise ValueError(
                 f"Unit of attribute '{aname}' must be equivalent to '{unit}'."
-                f"Found '{ufound}'."
+                f" Found '{ufound}'."
             )
 
 
