@@ -1,15 +1,43 @@
-import attr
-import astropy.units as u
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-import numpy as np
+# Copyright (c) 2019, Juan B Cabral
+# License: BSD-3-Clause
+#   Full Text: https://github.com/quatrope/uttrs/blob/master/LICENSE
+
+
+# =============================================================================
+# DOCS
+# =============================================================================
 
 """uttrs busca interoperar clases definidas con attrs y unidades de astropy
 de manera sencilla.
 
 """
 
+# =============================================================================
+# IMPORTS
+# =============================================================================
+
+import astropy.units as u
+
+import attr
+
+import numpy as np
+
+
+# =============================================================================
+# CONSTANTS AND METADATA
+# =============================================================================
+
+__version__ = 0.1
 
 UTTR_METADATA = "_uttr_ucav"
+
+
+# =============================================================================
+# ATTRIBUTE IMPLEMENTATION
+# =============================================================================
 
 
 @attr.s(frozen=True)
@@ -26,13 +54,15 @@ class UnitConverterAndValidator:
 
     """
 
-    unit : u.UnitBase = attr.ib(validator=attr.validators.instance_of(u.UnitBase))
+    unit: u.UnitBase = attr.ib(
+        validator=attr.validators.instance_of(u.UnitBase)
+    )
 
     def is_dimensionless(self, v):
         """Returns trus if v is dimensionless."""
         return (
-            not isinstance(v, u.Quantity) or
-            v.unit == u.dimensionless_unscaled)
+            not isinstance(v, u.Quantity) or v.unit == u.dimensionless_unscaled
+        )
 
     def asunit(self, value):
         """Asigna la unidad `unit` a un objeto sin dimension.
@@ -53,7 +83,6 @@ class UnitConverterAndValidator:
         if self.is_dimensionless(value):
             return value * self.unit
         return value
-
 
     def is_equivalent(self, instance, attribute, value):
         """Valida que el valor de un atributo sea equivalente a la unit.
@@ -126,7 +155,8 @@ def attribute(unit: u.UnitBase, **kwargs):
     Foo(p=<Quantity [1., 2., 3.] km / h>)
 
     >>> Foo(p=[1, 2, 3] * u.kpc)
-    ValueError: Unit of attribute 'p' must be equivalent to 'km / s'. Found 'kpc'.
+    ValueError: Unit of attribute 'p' must be equivalent to 'km / s'.
+    Found 'kpc'.
 
     """
     ucav = UnitConverterAndValidator(unit=unit)
@@ -146,20 +176,22 @@ def attribute(unit: u.UnitBase, **kwargs):
     if callable(converter):
         converter = [converter]
     converter.append(ucav.asunit)
-    
+
     metadata = kwargs.pop("metadata", {})
     metadata[UTTR_METADATA] = ucav
-    
+
     return attr.ib(
-        validator=validator, 
-        converter=converter, 
-        metadata=metadata,
-        **kwargs
+        validator=validator, converter=converter, metadata=metadata, **kwargs
     )
 
 
 #: Equivalent to `uttr.attribute` to use like "attr.ib".
 ib = attribute
+
+
+# =============================================================================
+# ARRAY ACCESORS
+# =============================================================================
 
 
 @attr.s(frozen=True, repr=False)
@@ -205,25 +237,25 @@ class ArrayAccessor:
 
     _instance = attr.ib()
     _fields_dict = attr.ib(init=False)
-    
+
     @_fields_dict.default
     def _fields_dict_default(self):
         return attr.fields_dict(type(self._instance))
-    
+
     def _coerce_default_unit(self, a, v):
         fd = self._fields_dict
         if a in fd and UTTR_METADATA in fd[a].metadata:
             ucav = fd[a].metadata[UTTR_METADATA]
             return v.to(ucav.unit)
         return v
-    
+
     def __repr__(self):
         """repr(x) <==> x.__repr__()"""
         return f"ArrayAccessor({repr(self._instance)})"
 
     def __dir__(self):
         """dir(x) <==> x.__dir__()"""
-        return self.__dir__() + dir(instance)
+        return self.__dir__() + dir(self._instance)
 
     def __getattr__(self, a):
         """getattr(x, y) <==> x.__getattr__(y) <==> getattr(x, y)"""
@@ -280,4 +312,6 @@ def array_accessor(**kwargs):
     if "factory" in kwargs:
         raise AttributeError("factory")
     kwargs.setdefault("repr", False)
-    return attr.ib(default=attr.Factory(ArrayAccessor, takes_self=True), **kwargs)
+    return attr.ib(
+        default=attr.Factory(ArrayAccessor, takes_self=True), **kwargs
+    )
