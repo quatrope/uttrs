@@ -10,8 +10,8 @@
 # DOCS
 # =============================================================================
 
-"""uttrs busca interoperar clases definidas con attrs y unidades de astropy
-de manera sencilla.
+"""uttrs seeks to interoperate Classes definided using attrs and astropy units
+in a simple manner.
 
 """
 
@@ -42,14 +42,14 @@ UTTR_METADATA = "_uttr_ucav"
 
 @attr.s(frozen=True)
 class UnitConverterAndValidator:
-    """Conversor y validador de de astropy.units para attrs.
+    """Converter and validator of astropy.units for attrs.
 
     Parameters
     ----------
 
     unit : u.UnitBase
-        La unidad para asignar a los objetos sin dimension y
-        validar otros objetos
+        The base units for attribute default unit assignation and validation
+        of inputs
 
 
     """
@@ -59,15 +59,15 @@ class UnitConverterAndValidator:
     )
 
     def is_dimensionless(self, v):
-        """Returns trus if v is dimensionless."""
+        """Returns true if v is dimensionless."""
         return (
             not isinstance(v, u.Quantity) or v.unit == u.dimensionless_unscaled
         )
 
     def asunit(self, value):
-        """Asigna la unidad `unit` a un objeto sin dimension.
+        """Assigns `unit` to a dimensionless object.
 
-        Si el objeto ya tiene dimensión lo retorna sin modificación.
+        If the object already has a dimension it returns it without change
 
         Examples
         --------
@@ -85,9 +85,10 @@ class UnitConverterAndValidator:
         return value
 
     def validate_is_equivalent_unit(self, instance, attribute, value):
-        """Valida que el valor de un atributo sea equivalente a la unit.
+        """Validates that the attribute value is equivalent to the
+        configured unit.
 
-        El método sigue la firma sugerida por los validadores de attrs.
+        This method follows the suggested signature by attrs validators.
 
         - the instance that’s being validated (aka self),
         - the attribute that it’s validating, and finally
@@ -97,7 +98,7 @@ class UnitConverterAndValidator:
         ------
 
         ValueError:
-            Si el valor tiene una dimension no equivalente a unit.
+            If the value has a non-equivalent dimesion to unit.
 
         """
         if self.is_dimensionless(value):
@@ -118,19 +119,18 @@ class UnitConverterAndValidator:
 
 
 def attribute(unit: u.UnitBase, **kwargs):
-    """Crea un nuevo atributo con conversores y validadores de unidad.
+    """Creats a new attribute with converters and unit validators.
 
     Parameters
     ----------
 
     unit : u.UnitBase
-        La unidad para utilizar en el converter y el validator del
-        atributo.
+        The unit to use in the converters and the attribute validator
     kwargs :
-        Todos los parametros extra de attr.ib()
+        Extra parameter of attr.ib()
 
 
-    Ejemplo
+    Example
     -------
 
     >>> @attr.s()
