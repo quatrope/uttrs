@@ -119,7 +119,7 @@ class UnitConverterAndValidator:
 
 
 def attribute(unit: u.UnitBase, **kwargs):
-    """Creats a new attribute with converters and unit validators.
+    """Creates a new attribute with converters and unit validators.
 
     Parameters
     ----------
@@ -196,11 +196,12 @@ ib = attribute
 
 @attr.s(frozen=True, repr=False)
 class ArrayAccessor:
-    """Convierte automaticamente los atributos tipo quantity en numpy.ndarray.
+    """Automatically converts the quantity typed attributes into
+    `numpy.ndarray`.
 
-    Las instancias de ArrayAccesor (`arr_`) acceden a los atributos de
-    la instancia provista, y si sonde tipo `astropy.units.Quantity` las
-    convierte automaticamente en numpy.ndarray.
+    Instances of ArrayAccessor (`arr_`) access to the attributes of the
+    provided instnace, and if they are of `atropy.units.Quantity` type it
+    converts them into `numpy.ndarray`.
 
     Examples
     --------
