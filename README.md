@@ -1,26 +1,25 @@
 # uttrs
 
-`uttrs` brinda dos utilidades principales para la creación de clases con `attrs` sensibles a unidades de astropy.
+`uttrs` provides two main utilities for Class attribute creation with `attrs` that use `astropy` units.
 
 ![img](res/ugly_logo.png)
 
-- `uttr.ib` Que genera atributos sensibles a unidades.
-- `uttr-array_accessor` que permite acceder a atributos con unidades y convertirlos en numpy array.
+- `uttr.ib` which generates attributes sensitive to units.
+- `uttr-array_accessor` which allows access to attributes linked to units, and transform them into numpy arrays.
 
-El siguiente código es un ejemplo prototipo de una clase que representa una Galaxia.
-La galaxia tiene
+The following piece of code is an exampl prototype of a Class representing a Galaxy.
+The Galaxy contains:
 
-- tres arreglos (`x`, `y`, `z`) de las posiciones de sus particulas las cuales se miden en kiloparsecs (`u.kpc`).
-- tres arreglos (`vx`, `vy`, `vz`) de las velocidades de sus particulas las cuales se miden en $Km/s$ (`u.kms/u.s`).
-- Un arreglos (`m`) de las mases de sus particulas las cuales se miden en masas solares (`u.M_sun`).
-- Un texto libre para notas `notes`
+- three arrays (`x`, `y`, `z`) with particle positions, measured in kiloparsecs (`u.kpc`).
+- three arrays (`vx`, `vy`, `vz`) for the particle velocities, measured in $Km/s$ (`u.kms/u.s`).
+- an array (`m`) of particle masses, expressed in solar masses (`u.M_sun`).
+- a free text for note taking in `notes`
 
-En todos los casos se desea poder acceder a las velocidade, posiciones y masas; con y sin unidades (como `np.ndarray`)
-Las unidades sugeridas en la información de las particulas son sugerencias asi:
+In every case we would like to access to position, velocity and mass of the particles, with and without units (as `np.ndarray`).
+Suggested units in the information of the attributes behave like this:
 
-- Si el usuario ingresa la informacón sin unidades, la galaxia asume que estan en la unida sugerida.
-- Si ingresa en alguna otra unidad valida que se equivalente a la unidad sugerida.
-
+- If the user makes the class instance without unit specification then default assumed unit is used.
+- If, otherwise, another unit is used as input, it is validated the feasibility of the conversion to default unit.
 
 ```python
 import attr
@@ -45,13 +44,13 @@ class Galaxy:
     arr_ = uttr.array_accessor()
 ```
 
-## Creemos una galaxia
+## Creating a galaxy
 
 ```pycon
 >>> import numpy as np
 >>> import astropy.units as u
 
-# creamos las particulas
+# Creating the particle arrays
 >>> x = np.random.randint(1000, 10_000, size=5) + np.random.rand(5)
 >>> y = np.random.randint(1000, 10_000, size=5) + np.random.rand(5)
 >>> z = np.random.randint(1000, 10_000, size=5) + np.random.rand(5)
@@ -95,9 +94,9 @@ Galaxy(
 ```
 
 
-## Simple interacción con `numpy.ndarray`
+## Simple interaction with `numpy.ndarray`
 
-we can access all the same attributes declared with `uttr.ib but` coerced to the default unit as numpy array.
+We can access all the same attributes declared with `uttr.ib but` coerced to the default unit as numpy array.
 
 ```pycon
 >>> gal.arr_.y
