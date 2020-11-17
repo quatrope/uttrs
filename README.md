@@ -5,6 +5,10 @@
 ![img](res/ugly_logo.png)
 
 [![Build Status](https://travis-ci.org/quatrope/uttrs.svg?branch=main)](https://travis-ci.org/quatrope/uttrs)
+[![License](https://img.shields.io/pypi/l/uttrs?color=blue)](https://tldrlegal.com/license/bsd-3-clause-license-(revised))
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://badge.fury.io/py/uttrs)
+
+
 
 - `uttr.ib` which generates attributes sensitive to units.
 - `uttr.array_accessor` which allows access to attributes linked to units, and transform them into numpy arrays.
