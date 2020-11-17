@@ -8,12 +8,29 @@
 [![License](https://img.shields.io/pypi/l/uttrs?color=blue)](https://tldrlegal.com/license/bsd-3-clause-license-(revised))
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://badge.fury.io/py/uttrs)
 
-
+**uttrs** is mainly two functions:
 
 - `uttr.ib` which generates attributes sensitive to units.
 - `uttr.array_accessor` which allows access to attributes linked to units, and transform them into numpy arrays.
 
-The following piece of code is an exampl prototype of a Class representing a Galaxy.
+## Installing
+
+- From PyPI
+
+```s
+$ pip install uttrs
+```
+
+- Simply clone and from within the repo
+
+```s
+$ pip install -e .
+```
+
+
+## Quick Start
+
+The following piece of code is an example prototype of a Class representing a Galaxy.
 The Galaxy contains:
 
 - three arrays (`x`, `y`, `z`) with particle positions, measured in *kiloparsecs* (`u.kpc`).
@@ -136,3 +153,12 @@ Lets fot example define `x` as a kilogram (`u.kg`)
 
 ValueError: Unit of attribute 'x' must be equivalent to 'kpc'.Found 'kg'.
 ```
+
+
+## References
+
+### Astropy
+
+>  Price-Whelan, Adrian M., et al. "The Astropy project:
+   Building an open-science project and status of the v2. 0 core
+   package." The Astronomical Journal 156.3 (2018): 123.

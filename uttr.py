@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright (c) 2020, Juan B Cabral
+# Copyright (c) 2020, Juan B Cabral and QuatroPe.
 # License: BSD-3-Clause
 #   Full Text: https://github.com/quatrope/uttrs/blob/master/LICENSE
 
@@ -10,7 +10,7 @@
 # DOCS
 # =============================================================================
 
-"""uttrs bridge between attrs and Astropy units.
+"""uttrs bridge between attrs and Astropy units [1]_.
 
 uttrs seeks to interoperate Classes defined using attrs and Astropy units
 in a simple manner with two main functionalities:
@@ -18,6 +18,13 @@ in a simple manner with two main functionalities:
 - ``uttr.ib`` which generates attributes sensitive to units.
 - ``uttr.array_accessor`` which allows access to attributes linked to units,
   and transform them into numpy arrays.
+
+
+References
+----------
+.. [1] Price-Whelan, Adrian M., et al. "The Astropy project:
+   Building an open-science project and status of the v2. 0 core
+   package." The Astronomical Journal 156.3 (2018): 123.
 
 """
 
@@ -80,7 +87,11 @@ class UnitConverterAndValidator:
             not isinstance(v, u.Quantity) or v.unit == u.dimensionless_unscaled
         )
 
-    def asunit(self, value):
+    def convert_quantity(self, v):
+        """Convert the quantity to the given unit."""
+        return v.to(self.unit)
+
+    def convert_if_dimensionless(self, value):
         """Assign a unit to a dimensionless object.
 
         If the object already has a dimension it returns it without change
@@ -89,10 +100,11 @@ class UnitConverterAndValidator:
         --------
         >>> uc = UnitConverter(u.km)
 
-        >>> uc.asunit(1)  # dimensionless then convert
+        >>> uc.convert_if_dimensionless(1)  # dimensionless then convert
         '<Quantity 1. km>'
 
-        >>> uc.asunit(1 * u.kpc)  # with dimension the same object is returned
+        >>> # the same object is returned
+        >>> uc.convert_if_dimensionless(1 * u.kpc)
         '<Quantity 1. kpc>'
 
         """
@@ -186,7 +198,7 @@ def attribute(unit: u.UnitBase, **kwargs):
     converter = kwargs.pop("converter", [])
     if callable(converter):
         converter = [converter]
-    converter.append(ucav.asunit)
+    converter.append(ucav.convert_if_dimensionless)
 
     metadata = kwargs.pop("metadata", {})
     metadata[UTTR_METADATA] = ucav
@@ -256,7 +268,7 @@ class ArrayAccessor:
         fd = self._fields_dict
         if a in fd and UTTR_METADATA in fd[a].metadata:
             ucav = fd[a].metadata[UTTR_METADATA]
-            return v.to(ucav.unit)
+            return ucav.convert_quantity(v)
         return v
 
     def __repr__(self):

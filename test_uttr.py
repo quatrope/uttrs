@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright (c) 2019, Juan B Cabral
+# Copyright (c) 2020, Juan B Cabral and QuatroPe.
 # License: BSD-3-Clause
 #   Full Text: https://github.com/quatrope/uttrs/blob/master/LICENSE
 
@@ -24,7 +24,7 @@ import astropy.units as u
 
 import attr
 
-# import numpy as np
+import numpy as np
 
 import pytest
 
@@ -74,14 +74,35 @@ class TestUnitConverterAndValidator:
         assert not ucav.is_dimensionless([1, 2, 3] * u.kg)
         assert not ucav.is_dimensionless(1 * u.kg)
 
-    def test_as_unit(self, make_ucav):
+    def test_convert_quantity(self, make_ucav):
         ucav = make_ucav(u.kg)
-        assert ucav.asunit(1).unit == u.kg
-        assert ucav.asunit(1 * u.kg).unit == u.kg
-        assert ucav.asunit(1 * u.m).unit == u.m
+        assert ucav.convert_quantity(1 * u.kg) == 1 * u.kg
+        assert ucav.convert_quantity(1 * u.g) == 0.001 * u.kg
+
+        arr = [1, 2, 3] * u.g
+        np.testing.assert_array_equal(
+            ucav.convert_quantity(arr), [0.001, 0.002, 0.003] * u.kg
+        )
+        with pytest.raises(u.UnitConversionError):
+            ucav.convert_quantity(1 * u.m)
+
+        with pytest.raises(AttributeError):
+            ucav.convert_quantity(1)
+
+        with pytest.raises(AttributeError):
+            ucav.convert_quantity([1])
+
+        with pytest.raises(AttributeError):
+            ucav.convert_quantity(np.array([1]))
+
+    def test_convert_if_dimensionless(self, make_ucav):
+        ucav = make_ucav(u.kg)
+        assert ucav.convert_if_dimensionless(1).unit == u.kg
+        assert ucav.convert_if_dimensionless(1 * u.kg).unit == u.kg
+        assert ucav.convert_if_dimensionless(1 * u.m).unit == u.m
 
         arr = [1, 2, 3] * u.kg
-        assert ucav.asunit(arr) is arr
+        assert ucav.convert_if_dimensionless(arr) is arr
 
     def test_validate_is_equivalent_unit(self, make_ucav, attribute):
         ucav = make_ucav(u.kg)
@@ -105,7 +126,9 @@ class TestUnitConverterAndValidator:
 
 class TestAttributeFunction:
     def test_converter(self, make_cls):
-        with mock.patch("uttr.UnitConverterAndValidator.asunit") as asunit:
+        with mock.patch(
+            "uttr.UnitConverterAndValidator.convert_if_dimensionless"
+        ) as asunit:
             Cls = make_cls(foo=uttr.ib(unit=u.kg))
 
             # check the converter
@@ -117,7 +140,9 @@ class TestAttributeFunction:
         def fake_converter(v):
             return v
 
-        with mock.patch("uttr.UnitConverterAndValidator.asunit") as asunit:
+        with mock.patch(
+            "uttr.UnitConverterAndValidator.convert_if_dimensionless"
+        ) as asunit:
             Cls = make_cls(foo=uttr.ib(unit=u.kg, converter=fake_converter))
 
             # check the converter

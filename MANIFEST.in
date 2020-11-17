@@ -2,7 +2,6 @@ include LICENSE
 include README.md
 include CODE_OF_CONDUCT.md
 
-recursive-exclude draft *
 recursive-exclude res *
 
 exclude test_*.py

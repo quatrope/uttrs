@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright (c) 2019, Juan B Cabral
+# Copyright (c) 2020, Juan B Cabral and QuatroPe.
 # License: BSD-3-Clause
 #   Full Text: https://github.com/quatrope/uttrs/blob/master/LICENSE
 
@@ -66,7 +66,7 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
-    author="QuatroPe",
+    author="JB Cabral and QuatroPe",
     author_email="jbcabral@unc.edu.ar",
     url="https://github.com/quatrope/utts",
     license="3 Clause BSD",
@@ -77,7 +77,7 @@ setup(
         "units",
         "astropy",
     ],
-    classifiers=(
+    classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Education",
         "Intended Audience :: Science/Research",
@@ -87,7 +87,7 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: Implementation :: CPython",
         "Topic :: Scientific/Engineering",
-    ),
+    ],
     py_modules=["uttr", "ez_setup"],
     install_requires=REQUIREMENTS,
 )
