@@ -66,7 +66,13 @@ setup(
     author_email="jbcabral@unc.edu.ar",
     url="https://github.com/quatrope/utts",
     license="3 Clause BSD",
-    keywords=["astronomy", "oop", "attrs", "units", "astropy",],
+    keywords=[
+        "astronomy",
+        "oop",
+        "attrs",
+        "units",
+        "astropy",
+    ],
     classifiers=(
         "Development Status :: 4 - Beta",
         "Intended Audience :: Education",
