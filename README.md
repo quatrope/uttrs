@@ -46,7 +46,7 @@ class Galaxy:
 
 ## Creating a galaxy
 
-```pycon
+```python
 >>> import numpy as np
 >>> import astropy.units as u
 
@@ -60,13 +60,13 @@ class Galaxy:
 >>> m = np.random.randint(1000, 10_000, size=5) + np.random.rand(5)
 
 >>> gal = Galaxy(
-...     x = x * u.kpc,  # kpc is the sugested unit
+...     x = x * u.kpc,  # kpc is the suggested unit
 ...     y = y * u.mpc,  # mpc is equivalent to kpc
-...     z = z,  # we asume is the sugested kpc unit
-...     vx = vx * (u.km/u.s), # the sugested unit
-...     vy = vy * (u.km/u.s), # the sugested unit
-...     vz = vz, # the sugested unit
-...     m = m * u.M_sun, # the sugested unit
+...     z = z,  # we assume is the suggested kpc unit
+...     vx = vx * (u.km/u.s), # the suggested unit
+...     vy = vy * (u.km/u.s), # the suggested unit
+...     vz = vz, # the suggested unit
+...     m = m * u.M_sun, # the suggested unit
 ...     notes="a random galaxy made with random numbers")
 
 >>> gal
@@ -98,14 +98,14 @@ Galaxy(
 
 We can access all the same attributes declared with `uttr.ib but` coerced to the default unit as numpy array.
 
-```pycon
+```python
 >>> gal.arr_.y
 array([0.00809345, 0.00219855, 0.00546479, 0.00186072, 0.00363664])
 ```
 
 The above code is equivalent to
 
-```pycon
+```python
 >>> np.asarray(gal.y.to(u.kpc))
 array([0.00809345, 0.00219855, 0.00546479, 0.00186072, 0.00363664])
 ```
@@ -115,9 +115,9 @@ array([0.00809345, 0.00219855, 0.00546479, 0.00186072, 0.00363664])
 If we change the unit to something not equivalent to the default unit
 declares in `uttr.ib` an exception is raised.
 
-Lets fot exaple define `x` as a kilogram (`u.kg`)
+Lets fot example define `x` as a kilogram (`u.kg`)
 
-```pycon
+```python
 >>> gal = Galaxy(
 ...     x = x * u.kg,  # kg is not equivalent to kpc
 ...     y = y,
