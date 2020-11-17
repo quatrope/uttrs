@@ -40,7 +40,9 @@ REQUIREMENTS = ["numpy", "attrs", "attrs", "astropy"]
 with open(PATH / "README.md") as fp:
     LONG_DESCRIPTION = fp.read()
 
-DESCRIPTION = LONG_DESCRIPTION.splitlines()[2]
+DESCRIPTION = (
+    LONG_DESCRIPTION.splitlines()[2].replace("`", "'").replace("*", "'")
+)
 
 
 with open(PATH / "uttr.py") as fp:
@@ -50,6 +52,8 @@ with open(PATH / "uttr.py") as fp:
         .strip()
         .replace('"', "")
     )
+
+print(DESCRIPTION)
 
 
 # =============================================================================

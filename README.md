@@ -1,11 +1,11 @@
 # uttrs
 
-`uttrs` provides two main utilities for Class attribute creation with `attrs` that use `astropy` units.
+`uttrs` seeks to interoperate Classes definided using attrs and *astropy units* in a simple manner.
 
 ![img](res/ugly_logo.png)
 
 - `uttr.ib` which generates attributes sensitive to units.
-- `uttr-array_accessor` which allows access to attributes linked to units, and transform them into numpy arrays.
+- `uttr.array_accessor` which allows access to attributes linked to units, and transform them into numpy arrays.
 
 The following piece of code is an exampl prototype of a Class representing a Galaxy.
 The Galaxy contains:

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright (c) 2019, Juan B Cabral
+# Copyright (c) 2020, Juan B Cabral
 # License: BSD-3-Clause
 #   Full Text: https://github.com/quatrope/uttrs/blob/master/LICENSE
 
@@ -10,8 +10,14 @@
 # DOCS
 # =============================================================================
 
-"""uttrs seeks to interoperate Classes definided using attrs and astropy units
-in a simple manner.
+"""uttrs bridge between attrs and Astropy units.
+
+uttrs seeks to interoperate Classes defined using attrs and Astropy units
+in a simple manner with two main functionalities:
+
+- ``uttr.ib`` which generates attributes sensitive to units.
+- ``uttr.array_accessor`` which allows access to attributes linked to units,
+  and transform them into numpy arrays.
 
 """
 
@@ -27,10 +33,22 @@ import numpy as np
 
 
 # =============================================================================
-# CONSTANTS AND METADATA
+# METADATA
 # =============================================================================
 
-__version__ = 0.1
+__all__ = [
+    "attribute",
+    "ib",
+    "array_accessor",
+]
+
+
+__version__ = "0.1"
+
+
+# =============================================================================
+# CONSTANTS AND METADATA
+# =============================================================================
 
 UTTR_METADATA = "_uttr_ucav"
 
@@ -46,11 +64,9 @@ class UnitConverterAndValidator:
 
     Parameters
     ----------
-
-    unit : u.UnitBase
+    unit : astropy.units.UnitBase
         The base units for attribute default unit assignation and validation
-        of inputs
-
+        of inputs.
 
     """
 
@@ -59,19 +75,18 @@ class UnitConverterAndValidator:
     )
 
     def is_dimensionless(self, v):
-        """Returns true if v is dimensionless."""
+        """Return true if v is dimensionless."""
         return (
             not isinstance(v, u.Quantity) or v.unit == u.dimensionless_unscaled
         )
 
     def asunit(self, value):
-        """Assigns `unit` to a dimensionless object.
+        """Assign a unit to a dimensionless object.
 
         If the object already has a dimension it returns it without change
 
         Examples
         --------
-
         >>> uc = UnitConverter(u.km)
 
         >>> uc.asunit(1)  # dimensionless then convert
@@ -79,14 +94,14 @@ class UnitConverterAndValidator:
 
         >>> uc.asunit(1 * u.kpc)  # with dimension the same object is returned
         '<Quantity 1. kpc>'
+
         """
         if self.is_dimensionless(value):
             return value * self.unit
         return value
 
     def validate_is_equivalent_unit(self, instance, attribute, value):
-        """Validates that the attribute value is equivalent to the
-        configured unit.
+        """Validate that the unit equivalence with. the configured unit.
 
         This method follows the suggested signature by attrs validators.
 
@@ -96,7 +111,6 @@ class UnitConverterAndValidator:
 
         Raises
         ------
-
         ValueError:
             If the value has a non-equivalent dimesion to unit.
 
@@ -119,11 +133,10 @@ class UnitConverterAndValidator:
 
 
 def attribute(unit: u.UnitBase, **kwargs):
-    """Creates a new attribute with converters and unit validators.
+    """Create a new attribute with converters and validators for a given unit.
 
     Parameters
     ----------
-
     unit : u.UnitBase
         The unit to use in the converters and the attribute validator
     kwargs :
@@ -132,13 +145,11 @@ def attribute(unit: u.UnitBase, **kwargs):
 
     Example
     -------
-
     >>> @attr.s()
     ... class Foo:
     ...     p = unit_attribute(unit=(u.km / u.s))
     >>>> Foo(p=[1, 2, 3])
     Foo(p=<Quantity [1., 2., 3.] km / s>)
-
 
     @attr.s()
     >>> class Foo:
@@ -185,7 +196,7 @@ def attribute(unit: u.UnitBase, **kwargs):
     )
 
 
-#: Equivalent to `uttr.attribute` to use like "attr.ib".
+#: Equivalent to ``uttr.attribute` to use like *attr.ib*.
 ib = attribute
 
 
@@ -196,16 +207,14 @@ ib = attribute
 
 @attr.s(frozen=True, repr=False)
 class ArrayAccessor:
-    """Automatically converts the quantity typed attributes into
-    `numpy.ndarray`.
+    """Automatic converter of the ``uttrs`` attributes in ``numpy.ndarray``.
 
-    Instances of ArrayAccessor (`arr_`) access to the attributes of the
-    provided instnace, and if they are of `atropy.units.Quantity` type it
-    converts them into `numpy.ndarray`.
+    Instances of ArrayAccessor (``arr_``) access to the attributes of the
+    provided instance, and if they are of ``atropy.units.Quantity`` type it
+    converts them into ``numpy.ndarray``.
 
     Examples
     --------
-
     >>> @attr.s()
     ... class Foo:
     ...     quantity = attr.ib()
@@ -251,15 +260,15 @@ class ArrayAccessor:
         return v
 
     def __repr__(self):
-        """repr(x) <==> x.__repr__()"""
+        """``repr(x) <==> x.__repr__()``."""
         return f"ArrayAccessor({repr(self._instance)})"
 
     def __dir__(self):
-        """dir(x) <==> x.__dir__()"""
+        """``dir(x) <==> x.__dir__()``."""
         return super().__dir__() + dir(self._instance)
 
     def __getattr__(self, a):
-        """getattr(x, y) <==> x.__getattr__(y) <==> getattr(x, y)"""
+        """getattr(x, y) <==> x.__getattr__(y) <==> getattr(x, y)."""
         v = getattr(self._instance, a)
         if isinstance(v, u.Quantity):
             coerced = self._coerce_default_unit(a, v)
@@ -268,12 +277,12 @@ class ArrayAccessor:
 
 
 def array_accessor():
-    """Provides an ArrayAccessor attribute to an attrs class.
+    """Provide an ArrayAccessor attribute to an attrs based class.
 
     This new attribute allows access to any other attribute or property of
     the class. In the case that the value given to the attribute is a
     `units.Quantity` type, it converts it to the default unit of the attribute
-    and aftwerwars to a `numpy.ndarray`.
+    and afterward to a `numpy.ndarray`.
 
     Parameters
     ----------
@@ -283,7 +292,6 @@ def array_accessor():
 
     Example
     -------
-
     >>> @attr.s()
     ... class Foo:
     ...     q = attr.ib()
