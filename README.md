@@ -4,6 +4,8 @@
 
 ![img](res/ugly_logo.png)
 
+[![Build Status](https://travis-ci.org/quatrope/uttrs.svg?branch=main)](https://travis-ci.org/quatrope/uttrs)
+
 - `uttr.ib` which generates attributes sensitive to units.
 - `uttr.array_accessor` which allows access to attributes linked to units, and transform them into numpy arrays.
 
