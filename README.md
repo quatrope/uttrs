@@ -7,6 +7,7 @@
 [![Build Status](https://travis-ci.com/quatrope/uttrs.svg?branch=main)](https://travis-ci.com/quatrope/uttrs)
 [![License](https://img.shields.io/pypi/l/uttrs?color=blue)](https://tldrlegal.com/license/bsd-3-clause-license-(revised))
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://badge.fury.io/py/uttrs)
+[![PyPI](https://img.shields.io/pypi/v/uttrs)](https://pypi.org/project/uttrs/)
 
 **uttrs** is mainly two functions:
 
