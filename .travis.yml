@@ -1,10 +1,29 @@
 language: python
-python:
-  - "style"
-  - "check-manifest"
-  - "coverage"
-  - "docstyle"
-  - "3.8"
-  - "3.9"
-install: pip install tox-travis
-script: tox
+sudo: true
+
+install:
+    - pip install tox
+
+script:
+    - tox -r
+
+matrix:
+    include:
+        - env: TOXENV=style
+          sudo: true
+
+        - python: 3.8
+          env: TOXENV=check-manifest
+          sudo: true
+
+        - env: TOXENV=docstyle
+          sudo: true
+
+        - env: TOXENV=py38
+          sudo: true
+
+        - env: TOXENV=py39
+          sudo: true
+
+        - env: TOXENV=coverage
+          sudo: true
