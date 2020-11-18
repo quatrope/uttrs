@@ -7,7 +7,6 @@
 [![Build Status](https://travis-ci.com/quatrope/uttrs.svg?branch=main)](https://travis-ci.com/quatrope/uttrs)
 [![License](https://img.shields.io/pypi/l/uttrs?color=blue)](https://tldrlegal.com/license/bsd-3-clause-license-(revised))
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://badge.fury.io/py/uttrs)
-[![PyPI](https://img.shields.io/pypi/v/uttrs)](https://pypi.org/project/uttrs/)
 
 **uttrs** is mainly two functions:
 
@@ -85,7 +84,7 @@ class Galaxy:
 
 >>> gal = Galaxy(
 ...     x = x * u.kpc,  # kpc is the suggested unit
-...     y = y * u.mpc,  # mpc is equivalent to kpc
+...     y = y * u.mpc,  # milliparsec is equivalent to kpc
 ...     z = z,  # we assume is the suggested kpc unit
 ...     vx = vx * (u.km/u.s), # the suggested unit
 ...     vy = vy * (u.km/u.s), # the suggested unit
@@ -111,7 +110,7 @@ Galaxy(
 >>> gal.vz  # z is now a km/s
 <Quantity [6218.56279077, 2015.04638043, 9919.99579782, 1278.94359767, 7228.21626876] km / s>
 
-# We stored y as mpc
+# We stored y as mpc (milliparsec)
 >>> gal.y
 <Quantity [8093.44916403, 2198.55398718, 5464.79397835, 1860.72260272, 3636.64010118] mpc>
 
@@ -152,7 +151,7 @@ Lets fot example define `x` as a kilogram (`u.kg`)
 ...     m = m,
 ...     notes="a random galaxy made with random numbers")
 
-ValueError: Unit of attribute 'x' must be equivalent to 'kpc'. Found 'kg'.
+ValueError: Unit of attribute 'x' must be equivalent to 'kpc'.Found 'kg'.
 ```
 
 
@@ -163,3 +162,4 @@ ValueError: Unit of attribute 'x' must be equivalent to 'kpc'. Found 'kg'.
 >  Price-Whelan, Adrian M., et al. "The Astropy project:
    Building an open-science project and status of the v2. 0 core
    package." The Astronomical Journal 156.3 (2018): 123.
+
