@@ -2,7 +2,7 @@
 
 `uttrs` seeks to interoperate Classes definided using attrs and *astropy units* in a simple manner.
 
-![img](res/ugly_logo.png)
+![img](https://github.com/quatrope/uttrs/blob/main/res/ugly_logo.png?raw=true)
 
 [![Build Status](https://travis-ci.com/quatrope/uttrs.svg?branch=main)](https://travis-ci.com/quatrope/uttrs)
 [![License](https://img.shields.io/pypi/l/uttrs?color=blue)](https://tldrlegal.com/license/bsd-3-clause-license-(revised))
