@@ -152,7 +152,7 @@ Lets fot example define `x` as a kilogram (`u.kg`)
 ...     m = m,
 ...     notes="a random galaxy made with random numbers")
 
-ValueError: Unit of attribute 'x' must be equivalent to 'kpc'.Found 'kg'.
+ValueError: Unit of attribute 'x' must be equivalent to 'kpc'. Found 'kg'.
 ```
 
 
