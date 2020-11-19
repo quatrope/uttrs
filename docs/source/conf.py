@@ -98,6 +98,9 @@ with open(UTTRS_PATH / "README.md") as fp:
 
 
 index = f"""
+..
+   Automatic created file. Don't edit
+
 
 {m2r.convert(md)}
 
