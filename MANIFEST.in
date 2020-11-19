@@ -3,7 +3,8 @@ include README.md
 include CODE_OF_CONDUCT.md
 
 recursive-exclude res *
+recursive-exclude tests *
+recursive-exclude docs *
 
-exclude test_*.py
 exclude tox.ini
 exclude pyproject.toml
