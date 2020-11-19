@@ -4,7 +4,10 @@
 
 ![img](https://github.com/quatrope/uttrs/blob/main/res/ugly_logo.png?raw=true)
 
+----
+
 [![Build Status](https://travis-ci.com/quatrope/uttrs.svg?branch=main)](https://travis-ci.com/quatrope/uttrs)
+[![Documentation Status](https://readthedocs.org/projects/uttrs/badge/?version=latest)](https://uttrs.readthedocs.io/en/latest/?badge=latest)
 [![License](https://img.shields.io/pypi/l/uttrs?color=blue)](https://www.tldrlegal.com/l/bsd3)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://badge.fury.io/py/uttrs)
 
