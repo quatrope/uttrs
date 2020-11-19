@@ -77,6 +77,12 @@ intersphinx_mapping = {'https://docs.python.org/': None}
 # PREPROCESS RST
 # =============================================================================
 
+html_logo = "_static/logo.png"
+
+html_css_files = [
+    'custom.css',
+]
+
 html_theme_options = {
     'logotext1': 'Uttrs',  # white,  semi-bold
     'logotext2': '',  # orange, light
