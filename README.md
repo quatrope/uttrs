@@ -20,16 +20,15 @@
 
 - From PyPI
 
-```s
+```bash
 $ pip install uttrs
 ```
 
 - Simply clone and from within the repo
 
-```s
+```bash
 $ pip install -e .
 ```
-
 
 ## Quick Start
 
@@ -162,7 +161,6 @@ ValueError: Unit of attribute 'x' must be equivalent to 'kpc'.Found 'kg'.
 
 ### Astropy
 
->  Price-Whelan, Adrian M., et al. "The Astropy project:
-   Building an open-science project and status of the v2. 0 core
-   package." The Astronomical Journal 156.3 (2018): 123.
-
+> Price-Whelan, Adrian M., et al. "The Astropy project:
+  Building an open-science project and status of the v2. 0 core
+  package." The Astronomical Journal 156.3 (2018): 123.
