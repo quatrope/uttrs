@@ -63,7 +63,7 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'bootstrap-astropy'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -76,6 +76,14 @@ intersphinx_mapping = {'https://docs.python.org/': None}
 # =============================================================================
 # PREPROCESS RST
 # =============================================================================
+
+html_theme_options = {
+    'logotext1': 'Uttrs',  # white,  semi-bold
+    'logotext2': '',  # orange, light
+    'logotext3': ':docs',   # white,  light
+    'astropy_project_menubar': False
+    }
+
 
 import m2r
 
@@ -92,6 +100,8 @@ Contents:
 
 .. toctree::
     :maxdepth: 3
+
+    api/modules.rst
 
 
 Indices and tables

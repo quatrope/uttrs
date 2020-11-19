@@ -208,7 +208,7 @@ def attribute(unit: u.UnitBase, **kwargs):
     )
 
 
-#: Equivalent to ``uttr.attribute` to use like *attr.ib*.
+#: Equivalent to ``uttr.attribute`` to use like *attr.ib*.
 ib = attribute
 
 
