@@ -50,7 +50,7 @@ __all__ = [
 ]
 
 
-__version__ = "0.1"
+__version__ = "0.1.1"
 
 
 # =============================================================================
@@ -108,7 +108,7 @@ class UnitConverterAndValidator:
         '<Quantity 1. kpc>'
 
         """
-        if self.is_dimensionless(value):
+        if self.is_dimensionless(value) and value is not None:
             return value * self.unit
         return value
 
