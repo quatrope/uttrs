@@ -8,3 +8,4 @@ recursive-exclude docs *
 
 exclude tox.ini
 exclude pyproject.toml
+exclude *.yml
