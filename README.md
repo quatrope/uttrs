@@ -10,25 +10,79 @@
 [![Documentation Status](https://readthedocs.org/projects/uttrs/badge/?version=latest)](https://uttrs.readthedocs.io/en/latest/?badge=latest)
 [![License](https://img.shields.io/pypi/l/uttrs?color=blue)](https://www.tldrlegal.com/l/bsd3)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://badge.fury.io/py/uttrs)
+[![PyPI](https://img.shields.io/pypi/v/uttrs)](https://pypi.org/project/uttrs/)
 
 **uttrs** is mainly two functions:
 
 - `uttr.ib` which generates attributes sensitive to units.
 - `uttr.array_accessor` which allows access to attributes linked to units, and transform them into numpy arrays.
 
-## Installing
+## Code and issues
 
-- From PyPI
+The entire source code of is hosted in GitHub
+[https://github.com/quatrope/uttrs/](https://github.com/quatrope/uttrs/)
 
-```bash
+## License
+
+Uttrs is under
+[The BSD-3 License](https://github.com/quatrope/uttrs/blob/master/LICENSE)
+
+The BSD 3-clause license allows you almost unlimited freedom with the software so long as you include the BSD copyright and license notice in it (found in Fulltext).
+
+
+## Installation
+
+This is the recommended way to install uttrs.
+
+### Installing  with pip
+
+Make sure that the Python interpreter can load uttrs code.
+The most convenient way to do this is to use virtualenv, virtualenvwrapper, and pip.
+
+After setting up and activating the virtualenv, run the following command:
+
+```console
 $ pip install uttrs
+...
 ```
 
-- Simply clone and from within the repo
+That should be it all.
 
-```bash
+### Installing the development version
+
+If you’d like to be able to update your uttrs code occasionally with the latest bug fixes and improvements, follow these instructions:
+
+Make sure that you have Git installed and that you can run its commands from a shell.
+(Enter *git help* at a shell prompt to test this.)
+
+Check out uttrs main development branch like so:
+
+```console
+$ git clone https://github.com/quatrope/uttrs
+...
+```
+
+This will create a directory *uttrs* in your current directory.
+
+Then you can proceed to install with the commands
+
+```console
+$ cd uttrs
 $ pip install -e .
+...
 ```
+
+## Documentation
+
+The full documentation of the project are available in
+[https://uttrs.readthedocs.io/](https://uttrs.readthedocs.io/)
+
+## Contact
+
+For bugs or question please contact
+
+> **Juan B. Cabral:** [jbcabral@unc.edu.ar](jbcabral@unc.edu.ar)
+
 
 ## Quick Start
 
