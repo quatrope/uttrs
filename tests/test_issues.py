@@ -45,6 +45,8 @@ def test_attribute_default_None():
 
 
 def test_asdict_recursive():
+    """https://github.com/quatrope/uttrs/issues/2"""
+
     @attr.s(frozen=True)
     class Foo:
         x = uttr.ib(unit=u.kpc)

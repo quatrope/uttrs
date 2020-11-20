@@ -110,7 +110,7 @@ Contents:
 .. toctree::
     :maxdepth: 3
 
-    api/modules.rst
+    api.rst
 
 
 Indices and tables
