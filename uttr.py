@@ -293,7 +293,7 @@ def array_accessor():
     the class. It converts it to the default unit of the attribute
     and afterward to a `numpy.ndarray`.
 
-    If you try to access a attribute no defined by uttrs, an
+    If you try to access an attribute no defined by uttrs, an
     ``AttributeErrror`` is raised.
 
     Example
