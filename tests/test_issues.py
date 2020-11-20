@@ -22,6 +22,8 @@ import astropy.units as u
 
 import attr
 
+import pytest
+
 import uttr
 
 # =============================================================================
@@ -40,3 +42,25 @@ def test_attribute_default_None():
     foo = Foo()
     assert foo.a is None
     assert foo.arr_.a is None
+
+
+def test_asdict_recursive():
+    @attr.s(frozen=True)
+    class Foo:
+        x = uttr.ib(unit=u.kpc)
+        y = uttr.ib(unit=u.kpc)
+        z = attr.ib()
+
+        arr_ = uttr.array_accessor()
+
+    foo = Foo(x=1, y=2, z=3)
+    result = attr.asdict(foo)
+
+    arr_ = result.pop("arr_")
+    assert isinstance(arr_, uttr.ArrayAccessor)
+    assert arr_.x == 1
+    assert arr_.y == 2
+    with pytest.raises(AttributeError):
+        arr_.z
+
+    assert result == {"x": 1 * u.kpc, "y": 2 * u.kpc, "z": 3}

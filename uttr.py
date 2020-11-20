@@ -217,7 +217,6 @@ ib = attribute
 # =============================================================================
 
 
-@attr.s(frozen=True, repr=False)
 class ArrayAccessor:
     """Automatic converter of the ``uttrs`` attributes in ``numpy.ndarray``.
 
@@ -255,12 +254,9 @@ class ArrayAccessor:
 
     """
 
-    _instance = attr.ib()
-    _fields_dict = attr.ib(init=False)
-
-    @_fields_dict.default
-    def _fields_dict_default(self):
-        return attr.fields_dict(type(self._instance))
+    def __init__(self, instance):
+        self._instance = instance
+        self._fields_dict = attr.fields_dict(type(self._instance))
 
     def __repr__(self):
         """``repr(x) <==> x.__repr__()``."""
