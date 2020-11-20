@@ -6,6 +6,7 @@
 
 ----
 
+[![QuatroPe](https://img.shields.io/badge/QuatroPe-Applications-1c5896)](https://quatrope.github.io/)
 [![Build Status](https://travis-ci.com/quatrope/uttrs.svg?branch=main)](https://travis-ci.com/quatrope/uttrs)
 [![Documentation Status](https://readthedocs.org/projects/uttrs/badge/?version=latest)](https://uttrs.readthedocs.io/en/latest/?badge=latest)
 [![License](https://img.shields.io/pypi/l/uttrs?color=blue)](https://www.tldrlegal.com/l/bsd3)
