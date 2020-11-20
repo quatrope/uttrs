@@ -237,7 +237,8 @@ class TestArrayAccessor:
         arr_ = uttr.ArrayAccessor(instance)
 
         assert instance.foo == "foo"
-        assert arr_.foo == "foo"
+        with pytest.raises(AttributeError):
+            arr_.foo
 
     def test_no_uttr_quantity(self, make_cls):
         Cls = make_cls(foo=uttr.ib(unit=u.kg))
@@ -247,7 +248,8 @@ class TestArrayAccessor:
         arr_ = uttr.ArrayAccessor(instance)
 
         assert instance.faa == 1 * u.kpc
-        assert arr_.faa == 1
+        with pytest.raises(AttributeError):
+            assert arr_.faa
 
     def test_repr(self, make_cls):
         Cls = make_cls(foo=uttr.ib(unit=u.kg))
@@ -263,6 +265,18 @@ class TestArrayAccessor:
         expected = super(uttr.ArrayAccessor, arr_).__dir__() + dir(instance)
 
         assert sorted(dir(arr_)) == sorted(expected)
+
+    def test_attrs_quantity(self, make_cls):
+        Cls = make_cls(foo=uttr.ib(unit=u.kg), faa=attr.ib())
+        instance = Cls(foo=1 * u.kg, faa=1 * u.kg)
+        arr_ = uttr.ArrayAccessor(instance)
+
+        assert instance.foo == 1 * u.kg
+        assert arr_.foo == 1
+
+        assert instance.faa == 1 * u.kg
+        with pytest.raises(AttributeError):
+            arr_.faa
 
 
 class TestArrayAccessorFunction:
@@ -292,11 +306,15 @@ class TestArrayAccessorFunction:
         instance = Cls(foo="foo")
 
         assert instance.foo == "foo"
-        assert instance.arr_.foo == "foo"
+
+        with pytest.raises(AttributeError):
+            instance.arr_.foo
 
     def test_no_uttr_quantity(self, make_cls):
         Cls = make_cls(foo=attr.ib(), arr_=uttr.array_accessor())
         instance = Cls(foo=1 * u.kg)
 
         assert instance.foo == 1 * u.kg
-        assert instance.arr_.foo == 1
+
+        with pytest.raises(AttributeError):
+            instance.arr_.foo

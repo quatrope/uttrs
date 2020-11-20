@@ -50,7 +50,7 @@ __all__ = [
 ]
 
 
-__version__ = "0.1.1"
+__version__ = "0.2"
 
 
 # =============================================================================
@@ -221,39 +221,37 @@ ib = attribute
 class ArrayAccessor:
     """Automatic converter of the ``uttrs`` attributes in ``numpy.ndarray``.
 
-    Instances of ArrayAccessor (``arr_``) access to the attributes of the
-    provided instance, and if they are of ``atropy.units.Quantity`` type it
-    converts them into ``numpy.ndarray``.
+    Instances of ArrayAccessor (``arr_``) access to the attributes
+    (defined with uttrs) of the provided instance, and if they are of
+    ``atropy.units.Quantity`` type it converts them into ``numpy.ndarray``.
+
+    If you try to access a attribute no defined by uttrs, an
+    ``AttributeErrror`` is raised.
 
     Examples
     --------
     >>> @attr.s()
     ... class Foo:
-    ...     quantity = attr.ib()
+    ...     quantity = uttr.ib(unit=u.km)
     ...     array = attr.ib()
-    ...     string = attr.ib()
 
     >>> foo = Foo(
     ...     quantity=u.Quantity([1, 2]),
     ...     array=np.array([1, 2]),
-    ...     string="foo"
     ... )
 
     >>> arr_ = ArrayAccessor(foo)
 
     >>> arr_
     ArrayAccessor(
-        Foo(quantity=<Quantity [1., 2.]>,
-        array=array([1, 2]), string='foo'))
+        Foo(quantity=<Quantity [1., 2.]>, array=array([1, 2]))
 
     >>> arr_.quantity
     array([1., 2., 3.])
 
     >>> arr_.array
-    array([1, 2, 3])
+    AttributeError("No uttr.Attribute 'array'")
 
-    >>> arr_.string
-    'foo'
 
     """
 
@@ -263,13 +261,6 @@ class ArrayAccessor:
     @_fields_dict.default
     def _fields_dict_default(self):
         return attr.fields_dict(type(self._instance))
-
-    def _coerce_default_unit(self, a, v):
-        fd = self._fields_dict
-        if a in fd and UTTR_METADATA in fd[a].metadata:
-            ucav = fd[a].metadata[UTTR_METADATA]
-            return ucav.convert_quantity(v)
-        return v
 
     def __repr__(self):
         """``repr(x) <==> x.__repr__()``."""
@@ -282,31 +273,34 @@ class ArrayAccessor:
     def __getattr__(self, a):
         """getattr(x, y) <==> x.__getattr__(y) <==> getattr(x, y)."""
         v = getattr(self._instance, a)
-        if isinstance(v, u.Quantity):
-            coerced = self._coerce_default_unit(a, v)
+
+        fd = self._fields_dict
+
+        if a in fd and UTTR_METADATA in fd[a].metadata:  # is a uttr.ib
+            if v is None:
+                return
+            ucav = fd[a].metadata[UTTR_METADATA]
+            coerced = ucav.convert_quantity(v)
             return np.asarray(coerced)
-        return v
+
+        raise AttributeError(f"No uttr.Attribute '{a}'")
 
 
 def array_accessor():
     """Provide an ArrayAccessor attribute to an attrs based class.
 
-    This new attribute allows access to any other attribute or property of
-    the class. In the case that the value given to the attribute is a
-    `units.Quantity` type, it converts it to the default unit of the attribute
+    This new attribute allows access to any other uttrs defined attribute or of
+    the class. It converts it to the default unit of the attribute
     and afterward to a `numpy.ndarray`.
 
-    Parameters
-    ----------
-    kwargs :
-        Accepts every parameter that `attr.ib` can accept, except for
-        default and factory.
+    If you try to access a attribute no defined by uttrs, an
+    ``AttributeErrror`` is raised.
 
     Example
     -------
     >>> @attr.s()
     ... class Foo:
-    ...     q = attr.ib()
+    ...     q = uttr.ib(unit=u.kg)
     ...     a = attr.ib()
     ...     arr_ = array_accessor()
 

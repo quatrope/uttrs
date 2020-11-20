@@ -185,7 +185,7 @@ array([0.00809345, 0.00219855, 0.00546479, 0.00186072, 0.00363664])
 The above code is equivalent to
 
 ```python
->>> np.asarray(gal.y.to(u.kpc))
+>>> gal.y.to_value(u.kpc)
 array([0.00809345, 0.00219855, 0.00546479, 0.00186072, 0.00363664])
 ```
 
