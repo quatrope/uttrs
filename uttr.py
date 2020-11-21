@@ -36,8 +36,6 @@ import astropy.units as u
 
 import attr
 
-import numpy as np
-
 
 # =============================================================================
 # METADATA
@@ -87,9 +85,9 @@ class UnitConverterAndValidator:
             not isinstance(v, u.Quantity) or v.unit == u.dimensionless_unscaled
         )
 
-    def convert_quantity(self, v):
-        """Convert the quantity to the given unit."""
-        return v.to(self.unit)
+    def to_array(self, v):
+        """Convert the quantity to an array of the given unit."""
+        return v.to_value(self.unit)
 
     def convert_if_dimensionless(self, value):
         """Assign a unit to a dimensionless object.
@@ -276,8 +274,8 @@ class ArrayAccessor:
             if v is None:
                 return
             ucav = fd[a].metadata[UTTR_METADATA]
-            coerced = ucav.convert_quantity(v)
-            return np.asarray(coerced)
+            arr = ucav.to_array(v)
+            return arr
 
         raise AttributeError(f"No uttr.Attribute '{a}'")
 
