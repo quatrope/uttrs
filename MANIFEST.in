@@ -8,4 +8,5 @@ recursive-exclude docs *
 
 exclude tox.ini
 exclude pyproject.toml
+exclude runtime.txt
 exclude *.yml
