@@ -110,6 +110,7 @@ Contents:
 .. toctree::
     :maxdepth: 3
 
+    tutorial.ipynb
     api.rst
 
 
