@@ -13,7 +13,7 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://badge.fury.io/py/uttrs)
 [![PyPI](https://img.shields.io/pypi/v/uttrs)](https://pypi.org/project/uttrs/)
 
-[![https://github.com/leliel12/diseno_sci_sfw](https://img.shields.io/badge/DiSoftCompCi-FAMAF-ffda00)](https://github.com/leliel12/diseno_sci_sfw)
+
 
 **uttrs** is mainly two functions:
 
