@@ -4,3 +4,4 @@ Sphinx
 astropy-sphinx-theme
 nbsphinx
 m2r
+blackcellmagic

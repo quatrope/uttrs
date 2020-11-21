@@ -74,26 +74,26 @@ class TestUnitConverterAndValidator:
         assert not ucav.is_dimensionless([1, 2, 3] * u.kg)
         assert not ucav.is_dimensionless(1 * u.kg)
 
-    def test_convert_quantity(self, make_ucav):
+    def test_to_array(self, make_ucav):
         ucav = make_ucav(u.kg)
-        assert ucav.convert_quantity(1 * u.kg) == 1 * u.kg
-        assert ucav.convert_quantity(1 * u.g) == 0.001 * u.kg
+        assert ucav.to_array(1 * u.kg) == 1
+        assert ucav.to_array(1 * u.g) == 0.001
 
         arr = [1, 2, 3] * u.g
         np.testing.assert_array_equal(
-            ucav.convert_quantity(arr), [0.001, 0.002, 0.003] * u.kg
+            ucav.to_array(arr), [0.001, 0.002, 0.003]
         )
         with pytest.raises(u.UnitConversionError):
-            ucav.convert_quantity(1 * u.m)
+            ucav.to_array(1 * u.m)
 
         with pytest.raises(AttributeError):
-            ucav.convert_quantity(1)
+            ucav.to_array(1)
 
         with pytest.raises(AttributeError):
-            ucav.convert_quantity([1])
+            ucav.to_array([1])
 
         with pytest.raises(AttributeError):
-            ucav.convert_quantity(np.array([1]))
+            ucav.to_array(np.array([1]))
 
     def test_convert_if_dimensionless(self, make_ucav):
         ucav = make_ucav(u.kg)

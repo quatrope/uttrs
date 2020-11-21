@@ -35,7 +35,7 @@ from setuptools import setup  # noqa
 
 PATH = pathlib.Path(os.path.abspath(os.path.dirname(__file__)))
 
-REQUIREMENTS = ["numpy", "attrs", "attrs", "astropy"]
+REQUIREMENTS = ["attrs", "attrs", "astropy"]
 
 with open(PATH / "README.md") as fp:
     LONG_DESCRIPTION = fp.read()
@@ -84,7 +84,7 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: Implementation :: CPython",
         "Topic :: Scientific/Engineering",
     ],
