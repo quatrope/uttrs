@@ -142,13 +142,14 @@ class UnitConverterAndValidator:
             )
 
 
-def attribute(unit: u.UnitBase, **kwargs):
+def attribute(unit: u.UnitBase = None, **kwargs):
     """Create a new attribute with converters and validators for a given unit.
 
     Parameters
     ----------
-    unit : u.UnitBase
-        The unit to use in the converters and the attribute validator
+    unit : u.UnitBase or None
+        The unit to use in the converters and the attribute validator.
+        If it's None, the call is equivalent to ``attr.ib(**kwargs)``
     kwargs :
         Extra parameter of attr.ib()
 
@@ -180,8 +181,8 @@ def attribute(unit: u.UnitBase, **kwargs):
     Found 'kpc'.
 
     """
-    # if unit is None:  # si unit es none entonces uso attrib a la antigua
-    #    return attr.ib(**kwargs)
+    if unit is None:  # si unit es None entonces uso attrib a la antigua
+        return attr.ib(**kwargs)
 
     ucav = UnitConverterAndValidator(unit=unit)
 

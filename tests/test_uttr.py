@@ -200,10 +200,17 @@ class TestAttributeFunction:
         instance = Cls(foo=1 * u.g)
         assert instance.foo == 1 * u.g
 
-    def test_invalie_unit(self, make_cls):
+    def test_invalid_unit(self, make_cls):
         Cls = make_cls(foo=uttr.ib(unit=u.kg))
         with pytest.raises(ValueError):
             Cls(foo=1 * u.m)
+
+    def test_unit_None(self, make_cls):
+        Cls = make_cls(foo=uttr.ib(unit=None), faa=uttr.ib(unit=u.kg))
+        fields = attr.fields_dict(Cls)
+
+        assert uttr.UTTR_METADATA not in fields["foo"].metadata
+        assert uttr.UTTR_METADATA in fields["faa"].metadata
 
 
 class TestArrayAccessor:
