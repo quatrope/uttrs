@@ -22,6 +22,8 @@ import astropy.units as u
 
 import attr
 
+import numpy as np
+
 import pytest
 
 import uttr
@@ -66,3 +68,22 @@ def test_asdict_recursive():
         arr_.z
 
     assert result == {"x": 1 * u.kpc, "y": 2 * u.kpc, "z": 3}
+
+
+def test_array_accesor_order():
+
+    @attr.s(frozen=True)
+    class Foo:
+        x = uttr.ib(unit=u.kpc)
+        y = uttr.ib(unit=u.kpc)
+        z = uttr.ib(init=False, unit=u.kpc)
+
+        arr_ = uttr.array_accessor()
+
+        @z.default
+        def _z_default(self):
+            return self.arr_.x * self.arr_.y
+
+    foo = Foo(x=1, y=2)
+
+    assert np.all(foo.arr_.z == 2)
