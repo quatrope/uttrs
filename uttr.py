@@ -41,11 +41,7 @@ import attr
 # METADATA
 # =============================================================================
 
-__all__ = [
-    "attribute",
-    "ib",
-    "array_accessor",
-]
+__all__ = ["attribute", "ib", "array_accessor", "s"]
 
 
 __version__ = "0.4.1"
@@ -331,3 +327,27 @@ def array_accessor():
         repr=False,
         init=False,
     )
+
+
+# =============================================================================
+# CLASS DECORATOR
+# =============================================================================
+
+
+def s(maybe_cls=None, *, aaccessor="arr_", **kwargs):
+
+    def wrap(cls):
+
+        if aaccessor is not None:
+            if hasattr(cls, aaccessor):
+                raise ValueError(
+                    f"{cls} already has an attribute with name {aaccessor}"
+                )
+            setattr(cls, aaccessor, array_accessor())
+
+        attr_s = attr.s(**kwargs)
+        return attr_s(cls)
+
+    if maybe_cls is None:
+        return wrap
+    return wrap(maybe_cls)

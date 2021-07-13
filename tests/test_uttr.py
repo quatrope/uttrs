@@ -338,3 +338,65 @@ class TestArrayAccessorFunction:
             instance.arr_.foo
         with pytest.raises(KeyError):
             instance.arr_["foo"]
+
+
+# =============================================================================
+# uttr.s
+# =============================================================================
+
+
+class TestClassDecorator:
+    def test_simple_decoration_maybe_cls(self):
+        @uttr.s
+        class Foo:
+            fatt = uttr.ib(unit=u.K)
+
+        assert "arr_" in attr.fields_dict(Foo)
+
+        foo = Foo(fatt=1)
+
+        assert isinstance(foo.arr_, uttr.ArrayAccessor)
+        assert np.all(foo.arr_.fatt == foo.fatt.to_value(u.K))
+
+    def test_simple_decoration_maybe_cls_None(self):
+        @uttr.s()
+        class Foo:
+            fatt = uttr.ib(unit=u.K)
+
+        assert "arr_" in attr.fields_dict(Foo)
+
+        foo = Foo(fatt=1)
+
+        assert isinstance(foo.arr_, uttr.ArrayAccessor)
+        assert np.all(foo.arr_.fatt == foo.fatt.to_value(u.K))
+
+    def test_simple_decoration_repeated_accesor_name(self):
+        with pytest.raises(ValueError):
+
+            @uttr.s
+            class Foo:
+                fatt = uttr.ib(unit=u.K)
+                arr_ = "foo"
+
+    def test_simple_decoration_other_name(self):
+        @uttr.s(aaccessor="cosoro_")
+        class Foo:
+            fatt = uttr.ib(unit=u.K)
+
+        assert "cosoro_" in attr.fields_dict(Foo)
+
+        foo = Foo(fatt=1)
+
+        assert isinstance(foo.cosoro_, uttr.ArrayAccessor)
+        assert np.all(foo.cosoro_.fatt == foo.fatt.to_value(u.K))
+
+    def test_simple_decoration_no_accessor(self):
+        @uttr.s(aaccessor=None)
+        class Foo:
+            fatt = uttr.ib(unit=u.K)
+
+        assert "arr_" not in attr.fields_dict(Foo)
+
+        foo = Foo(fatt=1)
+        with pytest.raises(AttributeError):
+            foo.arr_
