@@ -214,6 +214,7 @@ class TestArrayAccessor:
 
         assert instance.foo == 1 * u.kg
         assert arr_.foo == 1
+        assert arr_["foo"] == 1
 
     def test_equivalent_access(self, make_cls):
         Cls = make_cls(foo=uttr.ib(unit=u.kg))
@@ -222,6 +223,7 @@ class TestArrayAccessor:
 
         assert instance.foo == 1 * u.g
         assert arr_.foo == 0.001
+        assert arr_["foo"] == 0.001
 
     def test_same_unit_access(self, make_cls):
         Cls = make_cls(foo=uttr.ib(unit=u.kg))
@@ -230,6 +232,7 @@ class TestArrayAccessor:
 
         assert instance.foo == 1 * u.kg
         assert arr_.foo == 1
+        assert arr_["foo"] == 1
 
     def test_no_uttr_access(self, make_cls):
         Cls = make_cls(foo=attr.ib())
@@ -239,6 +242,8 @@ class TestArrayAccessor:
         assert instance.foo == "foo"
         with pytest.raises(AttributeError):
             arr_.foo
+        with pytest.raises(KeyError):
+            arr_["foo"]
 
     def test_no_uttr_quantity(self, make_cls):
         Cls = make_cls(foo=uttr.ib(unit=u.kg))
@@ -250,6 +255,8 @@ class TestArrayAccessor:
         assert instance.faa == 1 * u.kpc
         with pytest.raises(AttributeError):
             assert arr_.faa
+        with pytest.raises(KeyError):
+            assert arr_["faa"]
 
     def test_repr(self, make_cls):
         Cls = make_cls(foo=uttr.ib(unit=u.kg))
@@ -286,6 +293,7 @@ class TestArrayAccessorFunction:
 
         assert instance.foo == 1 * u.kg
         assert instance.arr_.foo == 1
+        assert instance.arr_["foo"] == 1
 
     def test_equivalent_access(self, make_cls):
         Cls = make_cls(foo=uttr.ib(unit=u.kg), arr_=uttr.array_accessor())
@@ -293,13 +301,14 @@ class TestArrayAccessorFunction:
 
         assert instance.foo == 1 * u.g
         assert instance.arr_.foo == 0.001
+        assert instance.arr_["foo"] == 0.001
 
     def test_same_unit_access(self, make_cls):
         Cls = make_cls(foo=uttr.ib(unit=u.kg), arr_=uttr.array_accessor())
         instance = Cls(foo=1 * u.kg)
 
         assert instance.foo == 1 * u.kg
-        assert instance.arr_.foo == 1
+        assert instance.arr_["foo"] == 1
 
     def test_no_uttr_access(self, make_cls):
         Cls = make_cls(foo=attr.ib(), arr_=uttr.array_accessor())
@@ -309,6 +318,8 @@ class TestArrayAccessorFunction:
 
         with pytest.raises(AttributeError):
             instance.arr_.foo
+        with pytest.raises(KeyError):
+            instance.arr_["foo"]
 
     def test_no_uttr_quantity(self, make_cls):
         Cls = make_cls(foo=attr.ib(), arr_=uttr.array_accessor())
@@ -318,3 +329,5 @@ class TestArrayAccessorFunction:
 
         with pytest.raises(AttributeError):
             instance.arr_.foo
+        with pytest.raises(KeyError):
+            instance.arr_["foo"]

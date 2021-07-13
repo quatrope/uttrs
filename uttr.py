@@ -180,6 +180,9 @@ def attribute(unit: u.UnitBase, **kwargs):
     Found 'kpc'.
 
     """
+    # if unit is None:  # si unit es none entonces uso attrib a la antigua
+    #    return attr.ib(**kwargs)
+
     ucav = UnitConverterAndValidator(unit=unit)
 
     # si ya habia validadores los saco o creo una nueva lista
@@ -257,12 +260,19 @@ class ArrayAccessor:
         self._fields_dict = attr.fields_dict(type(self._instance))
 
     def __repr__(self):
-        """``repr(x) <==> x.__repr__()``."""
+        """repr(x) <==> x.__repr__()."""
         return f"ArrayAccessor({repr(self._instance)})"
 
     def __dir__(self):
-        """``dir(x) <==> x.__dir__()``."""
+        """dir(x) <==> x.__dir__()."""
         return super().__dir__() + dir(self._instance)
+
+    def __getitem__(self, k):
+        """x[k] <==> x.__getitem__(k)."""
+        try:
+            return self.__getattr__(k)
+        except AttributeError:
+            raise KeyError(k)
 
     def __getattr__(self, a):
         """getattr(x, y) <==> x.__getattr__(y) <==> getattr(x, y)."""
