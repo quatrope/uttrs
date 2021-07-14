@@ -1,6 +1,6 @@
 ipykernel
 ipython
-Sphinx
+Sphinx==4.0.2
 astropy-sphinx-theme
 nbsphinx
 m2r
