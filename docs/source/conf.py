@@ -91,38 +91,40 @@ html_theme_options = {
     }
 
 
-import m2r
+# import m2r
 
-with open(UTTRS_PATH / "README.md") as fp:
-    md = fp.read()
-
-
-index = f"""
-..
-   Automatic created file. Don't edit
+# with open(UTTRS_PATH / "README.md") as fp:
+#     md = fp.read()
 
 
-{m2r.convert(md)}
-
-Contents:
----------
-
-.. toctree::
-    :maxdepth: 3
-
-    tutorial.ipynb
-    api.rst
+# index = f"""
+# ..
+#    Automatic created file. Don't edit
 
 
-Indices and tables
-==================
+# {m2r.convert(md)}
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+# Contents:
+# ---------
 
-"""
+# .. toctree::
+#     :maxdepth: 3
 
-with open(CURRENT_PATH / "index.rst", "w") as fp:
-    fp.write(index)
-    print("index.rst regenerated!")
+#     tutorial.ipynb
+#     api.rst
+
+
+# Indices and tables
+# ==================
+
+# * :ref:`genindex`
+# * :ref:`modindex`
+# * :ref:`search`
+
+# """
+
+# with open(CURRENT_PATH / "index.rst", "w") as fp:
+#     fp.write(index)
+#     print("index.rst regenerated!")
+
+# del index
