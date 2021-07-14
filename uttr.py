@@ -341,6 +341,47 @@ def array_accessor():
 
 
 def s(maybe_cls=None, *, aaccessor="arr_", **kwargs):
+    r"""Class decorator to automatically add an array accessor to the class.
+
+    The behaviour is the same as
+    `attr.s <https://www.attrs.org/en/stable/api.html#attr.s>`_ function
+    but also automatically creates an ``uttrs.ArrayAccessor`` property with
+    defined by `aaccessor`.
+
+    Parameters
+    ----------
+    aaccessor: str or None, default 'arr_`
+        Name of the array accessor property. If is None, no property is added.
+    maybe_cls: class or None, default None.
+        Same behavior of ``attr.s()`` maybe_cls parameter.
+    kwargs:
+        Same parameter as ``attr.s()``.
+
+    Examples
+    --------
+    The next two codes are equivalent
+
+    .. code-block:: python
+
+        import astropy.units as u
+        import uttr
+
+        @attr.s
+        class Foo:
+            attribute = uttr.ib(unit=u.K)
+            arr_ = uttr.array_accessor()
+
+    .. code-block:: python
+
+        import astropy.units as u
+        import uttr
+
+        @uttr.s
+        class Foo:
+            attribute = uttr.ib(unit=u.K)
+
+    """
+
     def wrap(cls):
 
         if aaccessor is not None:
