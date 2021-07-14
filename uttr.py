@@ -18,6 +18,7 @@ in a simple manner with two main functionalities:
 - ``uttr.ib`` which generates attributes sensitive to units.
 - ``uttr.array_accessor`` which allows access to attributes linked to units,
   and transform them into numpy arrays.
+- ``uttr.s`` a class decorator to automatically add the `array_accessor`.
 
 
 References
@@ -41,7 +42,7 @@ import attr
 # METADATA
 # =============================================================================
 
-__all__ = ["attribute", "ib", "array_accessor", "s"]
+__all__ = ["s", "ib", "attribute", "array_accessor"]
 
 
 __version__ = "0.5"

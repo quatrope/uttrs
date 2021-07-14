@@ -15,10 +15,11 @@
 
 
 
-**uttrs** is mainly two functions:
+**uttrs** is mainly three functions:
 
 - `uttr.ib` which generates attributes sensitive to units.
 - `uttr.array_accessor` which allows access to attributes linked to units, and transform them into numpy arrays.
+- `uttr.s` a class decorator to automatically add the `array_accessor`.
 
 ## Code and issues
 
@@ -104,12 +105,11 @@ Suggested units in the information of the attributes behave like this:
 - If, otherwise, another unit is used as input, it is validated the feasibility of the conversion to default unit.
 
 ```python
-import attr
 import uttr
 
 import astropy.units as u
 
-@attr.s
+@uttr.s
 class Galaxy:
     x = uttr.ib(unit=u.kpc)
     y = uttr.ib(unit=u.kpc)
@@ -121,9 +121,8 @@ class Galaxy:
 
     m = uttr.ib(unit=u.M_sun)
 
-    notes = attr.ib(validator=attr.validators.instance_of(str))
+    notes = uttr.ib(converter=str)
 
-    arr_ = uttr.array_accessor()
 ```
 
 ## Creating a galaxy
