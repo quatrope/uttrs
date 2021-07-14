@@ -125,3 +125,4 @@ Indices and tables
 
 with open(CURRENT_PATH / "index.rst", "w") as fp:
     fp.write(index)
+    print("index.rst regenerated!")
