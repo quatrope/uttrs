@@ -249,7 +249,6 @@ class ArrayAccessor:
     >>> arr_.array
     AttributeError("No uttr.Attribute 'array'")
 
-
     """
 
     def __init__(self, instance):
@@ -281,9 +280,7 @@ class ArrayAccessor:
 
     def __getattr__(self, a):
         """getattr(x, y) <==> x.__getattr__(y) <==> getattr(x, y)."""
-
         fd = self._fields_dict
-
         if a in fd:
             v = getattr(self._instance, a)
             if v is None:
