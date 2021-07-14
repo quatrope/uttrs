@@ -254,7 +254,15 @@ class ArrayAccessor:
 
     def __init__(self, instance):
         self._instance = instance
-        self._fields_dict = attr.fields_dict(type(self._instance))
+
+        # filter only the uttrs attributes
+        # the ones with the UTTR_METADATA
+        ifields_dict = attr.fields_dict(type(instance))
+        self._fields_dict = {
+            aname: attrib
+            for aname, attrib in ifields_dict.items()
+            if UTTR_METADATA in attrib.metadata
+        }
 
     def __repr__(self):
         """repr(x) <==> x.__repr__()."""
@@ -262,7 +270,7 @@ class ArrayAccessor:
 
     def __dir__(self):
         """dir(x) <==> x.__dir__()."""
-        return super().__dir__() + dir(self._instance)
+        return super().__dir__() + list(self._fields_dict)
 
     def __getitem__(self, k):
         """x[k] <==> x.__getitem__(k)."""
@@ -273,11 +281,11 @@ class ArrayAccessor:
 
     def __getattr__(self, a):
         """getattr(x, y) <==> x.__getattr__(y) <==> getattr(x, y)."""
-        v = getattr(self._instance, a)
 
         fd = self._fields_dict
 
-        if a in fd and UTTR_METADATA in fd[a].metadata:  # is a uttr.ib
+        if a in fd:
+            v = getattr(self._instance, a)
             if v is None:
                 return
             ucav = fd[a].metadata[UTTR_METADATA]
@@ -322,11 +330,12 @@ def array_accessor():
     array([1, 2, 3])
 
     """
-    return attr.ib(
-        default=attr.Factory(ArrayAccessor, takes_self=True),
-        repr=False,
-        init=False,
-    )
+
+    @property
+    def array_accessor_property(self):
+        return ArrayAccessor(instance=self)
+
+    return array_accessor_property
 
 
 # =============================================================================
@@ -335,7 +344,6 @@ def array_accessor():
 
 
 def s(maybe_cls=None, *, aaccessor="arr_", **kwargs):
-
     def wrap(cls):
 
         if aaccessor is not None:

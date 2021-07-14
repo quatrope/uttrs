@@ -56,7 +56,8 @@ def attribute():
 @pytest.fixture(scope="session")
 def make_cls():
     def make(name="Foo", **kwargs):
-        return attr.make_class(name, kwargs)
+        cls = type(name, (object,), kwargs)
+        return attr.s(cls)
 
     return make
 
@@ -276,9 +277,10 @@ class TestArrayAccessor:
         Cls = make_cls(foo=uttr.ib(unit=u.kg))
         instance = Cls(foo=1 * u.kg)
         arr_ = uttr.ArrayAccessor(instance)
-        expected = super(uttr.ArrayAccessor, arr_).__dir__() + dir(instance)
+        dir_arr = dir(arr_)
 
-        assert sorted(dir(arr_)) == sorted(expected)
+        expected = super(uttr.ArrayAccessor, arr_).__dir__() + ["foo"]
+        assert set(dir_arr) == set(expected)
 
     def test_attrs_quantity(self, make_cls):
         Cls = make_cls(foo=uttr.ib(unit=u.kg), faa=attr.ib())
@@ -351,7 +353,7 @@ class TestClassDecorator:
         class Foo:
             fatt = uttr.ib(unit=u.K)
 
-        assert "arr_" in attr.fields_dict(Foo)
+        assert "arr_" in vars(Foo)
 
         foo = Foo(fatt=1)
 
@@ -363,7 +365,7 @@ class TestClassDecorator:
         class Foo:
             fatt = uttr.ib(unit=u.K)
 
-        assert "arr_" in attr.fields_dict(Foo)
+        assert "arr_" in vars(Foo)
 
         foo = Foo(fatt=1)
 
@@ -383,7 +385,7 @@ class TestClassDecorator:
         class Foo:
             fatt = uttr.ib(unit=u.K)
 
-        assert "cosoro_" in attr.fields_dict(Foo)
+        assert "cosoro_" in vars(Foo)
 
         foo = Foo(fatt=1)
 
@@ -395,7 +397,7 @@ class TestClassDecorator:
         class Foo:
             fatt = uttr.ib(unit=u.K)
 
-        assert "arr_" not in attr.fields_dict(Foo)
+        assert "arr_" not in vars(Foo)
 
         foo = Foo(fatt=1)
         with pytest.raises(AttributeError):
